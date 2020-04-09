@@ -62,12 +62,12 @@ public class MRADriver {
     budget = input.nextDouble();
 
     System.out.println();
-    System.out.println("Enter the Job ID Number: ");
+    System.out.println("Enter the Job ID Number (1-10): ");
     jobID = input.nextInt();
     jobID = (jobID - 1) * 10;
 
     System.out.println();
-    System.out.println("Enter the dataSize: ");
+    System.out.println("Enter the dataSize (1-10): ");
     dataSize = input.nextDouble();
 
     dataSize = (dataSize % 11);

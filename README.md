@@ -12,9 +12,10 @@ This project was created as a part of a senior thesis for CMPSC 610 at Allegheny
 * `javac java MRADriver`: run the Java program in the command-line
 
 
-## Contributors
+<!-- ## Contributors
 The following people contributed to this project:
 - Ben Watto
+ -->
 
 
 ## Problems
