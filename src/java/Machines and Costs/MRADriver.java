@@ -30,8 +30,8 @@ public class MRADriver {
           arrayOfMachines[i].setTypeNo(i + 1);
           arrayOfMachines[i].setMemory(i + 1);
           // Change 0.25 to alter the price distribution
-          arrayOfMachines[i].setPrice(arrayOfMachines[i].getTypeNo() * 1);
-          // arrayOfMachines[i].setPrice(arrayOfMachines[i].getTypeNo() * 0.25);
+          // arrayOfMachines[i].setPrice(arrayOfMachines[i].getTypeNo() * 1);
+          arrayOfMachines[i].setPrice(arrayOfMachines[i].getTypeNo() * 0.25);
           // Random rand = new Random();
           // double randomValue = rangeMin + (rangeMax - rangeMin) * rand.nextDouble();
           // arrayOfMachines[i].setPrice(arrayOfMachines[i].getTypeNo() * randomValue);
@@ -41,6 +41,8 @@ public class MRADriver {
     double budget;
     int jobID;
     double dataSize;
+    double et = 0;
+
 
     Scanner input = new Scanner(System.in);
     System.out.println();
@@ -73,7 +75,8 @@ public class MRADriver {
     + "Price" + "\t"
     + "TR" + "\t"
     + "X" + "\t"
-    + "Cost");
+    + "Cost" + "\t"
+    + "ET");
 
     for (int j = 0; j < arrayOfMachines.length; j++) {
         double timeRepresentation;
@@ -81,6 +84,9 @@ public class MRADriver {
         double cost;
         timeRepresentation = (dataSize / arrayOfMachines[j].getMemory()) * alphaJD;
         numberOfMachines = budget / (timeRepresentation * arrayOfMachines[j].getPrice());
+
+        et = timeRepresentation / Math.floor(numberOfMachines);
+
         cost = arrayOfMachines[j].getPrice() * Math.floor(numberOfMachines) * timeRepresentation;
       System.out.println(arrayOfJobs[jobID].getJobID() + "\t"
       + dataSize + "\t"
@@ -90,7 +96,8 @@ public class MRADriver {
       + df.format(arrayOfMachines[j].getPrice()) + "\t"
       + df.format(timeRepresentation) + "\t"
       + Math.round(Math.floor(numberOfMachines)) + "\t"
-      + df.format(cost));
+      + df.format(cost) + "\t"
+      + df.format(et));
     }
   }
 }

@@ -31,12 +31,12 @@ public class MRADriver {
     /* go through the loop and print */
     System.out.println("Contents of the arrayOfJobs: ");
     System.out.println("Contents of the array: ");
-    System.out.println("i"+ "\t"+"jobID" + "\t"
+    System.out.println("jobID" + "\t"
     + "Data" + "\t"
     + "AlphaJD" + "\t");
 
     for (int i = 0; i < arrayOfJobs.length; i++) {
-      System.out.println(i + "\t" + arrayOfJobs[i].getJobID() + "\t"
+      System.out.println(arrayOfJobs[i].getJobID() + "\t"
       + arrayOfJobs[i].getDataSize() + "\t"
       + arrayOfJobs[i].getAlphaJD());
 
@@ -92,7 +92,6 @@ public class MRADriver {
       + arrayOfMachines[j].getMemory() + "\t"
       + arrayOfMachines[j].getPrice() + "\t"
       + df.format(timeRepresentation) + "\t"
-      // + Math.round(timeRepresentation) + "\t"
       + Math.round(Math.floor(numberOfMachines)) + "\t"
       + df.format(ec));
       }
