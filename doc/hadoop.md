@@ -1,5 +1,5 @@
 # Hadoop
-Details to set up and run a word counter experiment in Hadoop are outlined below
+Details to set up Hadoop are outlined below
 
 ## About This Project
 
@@ -99,8 +99,112 @@ scp -r filename.pem ubuntu@IP:/home/ubuntu
 <!-- Login to the machine using ip -->
 mv filename.pem ~/.ssh
 
-at this stage hadoop should be installed successfully
+<!-- At this stage hadoop should be installed successfully -->
+ssh namenode
+ssh datanode1
 <!-- Now try to do ssh namenode, ssh datanode1, ssh datanode2 from all machines, passwordless authentication should work.  -->
+
+edit core-site.xml with the current namenode as shown below.
+  copy the file to all the data nodes.
+	 /usr/local/hadoop/etc/hadoop
+
+edit hdfs-site.xml as shown below.
+sudo mkdir -p /usr/local/hadoop/hadoop_data/hdfs/namenode
+sudo chown -R ubuntu /usr/local/hadoop/hadoop_data/
+sudo mkdir -p /usr/local/hadoop/hadoop_data/hdfs/datanode
+    sudo chown -R ubuntu /usr/local/hadoop/hadoop_data/
+
+edit yarn-site.xml as shown below.
+create masters and slaves file
+
+<!-- for example in masters file
+#
+namenode
+# -->
+<!--
+in slaves file
+#
+datanode01
+datanode02
+# -->
+
+  /usr/local/hadoop/etc/hadoop
+
+
+update all the /etc/hosts file in all data nodes
+<!--
+#
+172.31.40.54 namenode
+172.31.39.100 datanode1
+172.31.40.54  datanode2
+# -->
+
+NOTE: ALWAYS PRIVATE IP in HOSTS FILE, otherwise you will get an error "bind exception"
+hadoop namenode -format
+
+cd /usr/local/hadoop
+
+$HADOOP_HOME/sbin/start-dfs.sh
+$HADOOP_HOME/sbin/start-yarn.sh
+
+jps
+
+<!-- All set now you should see the services running on the master node and data nodes by typing in jps. -->
+
+On master node
+
+core-site.xml:
+--------------
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://namenode:9000</value>
+</property>
+
+hdfs-site.xml
+-------------
+<property>
+<name>dfs.namenode.name.dir</name>
+<value>file:///usr/local/hadoop/hadoop_data/hdfs/namenode</value>
+</property>
+
+yarn-site.xml
+-------------
+<property>
+<name>yarn-nodemanager.aux-services</name>
+<value>mapreduce_shuffle</value>
+</property>
+<property>
+<name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+<value>org.apache.hadoop.mapred.ShuffleHandler</value>
+</property>
+<property>
+<name>yarn.resourcemanager.resource-tracker.address</name>
+<value>namenode:8025</value>
+</property>
+<property>
+<name>yarn.resourcemanager.scheduler.address</name>
+<value>namenode:8030</value>
+</property>
+<property>
+<name>yarn.resourcemanager.address</name>
+<value>namenode:8050</value>
+</property>
+
+On data node
+
+core-site.xml
+-------------
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://namenode:9000</value>
+</property>
+
+hdfs-site.xml
+-------------
+<property>
+<name>dfs.datanode.data.dir</name>
+<value>file:///usr/local/hadoop/hadoop_data/hdfs/datanode</value>
+</property>
 
 
 
